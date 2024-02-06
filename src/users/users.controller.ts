@@ -4,7 +4,5 @@ import { CreateUserDto } from 'src/users/dtos/create-user.dto';
 @Controller('auth')
 export class UsersController {
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
-    console.log(body);
-  }
+  createUser(@Body() body: CreateUserDto) {}
 }
