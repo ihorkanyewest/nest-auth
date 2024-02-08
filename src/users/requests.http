@@ -24,3 +24,12 @@ content-type: application/json
   "email": "updatedEmail@asdf.com",
   "password": "newPass111"
 }
+
+### Signin
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+  "email": "crypt@asdf.com",
+  "password": "1232311222"
+}

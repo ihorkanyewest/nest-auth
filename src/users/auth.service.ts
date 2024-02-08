@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/user.entity';
-import { randomBytes, scrypt as _scrypt } from 'crypto';
-import { promisify } from 'util';
-
-const scrypt = promisify(_scrypt);
+import { comparePasswords, generateCryptedPassword } from 'src/users/utils';
 
 @Injectable()
 export class AuthService {
@@ -19,12 +20,27 @@ export class AuthService {
       throw new BadRequestException(`user with ${email} already exist`);
     }
 
-    const salt = randomBytes(8).toString('hex');
+    const cryptedPassword = await generateCryptedPassword(password);
 
-    const hash = (await scrypt(password, salt, 32)) as Buffer;
+    return this.userService.create({
+      email,
+      password: cryptedPassword,
+    });
+  }
 
-    const result = `${salt}.${hash.toString('hex')}`;
+  async signin({ email, password }: Pick<User, 'email' | 'password'>) {
+    const [user] = await this.userService.find({ email });
 
-    return this.userService.create({ email, password: result });
+    if (!user) {
+      throw new NotFoundException(`user with ${email} not found`);
+    }
+
+    const match = await comparePasswords(user.password, password);
+
+    if (!match) {
+      throw new BadRequestException(`Bad password`);
+    }
+
+    return user;
   }
 }
