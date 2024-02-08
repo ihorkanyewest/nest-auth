@@ -16,6 +16,14 @@ content-type: application/json
   "password": "12345"
 }
 
+### Signout
+POST http://localhost:3000/auth/signout
+content-type: application/json
+
+
+### Get current user
+GET http://localhost:3000/auth/current_user
+
 ### Find a user
 GET http://localhost:3000/auth/2
 

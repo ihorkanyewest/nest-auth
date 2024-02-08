@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Session,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dtos/create-user.dto';
 import { UsersService } from 'src/users/users.service';
@@ -15,9 +16,14 @@ import { UpdateUserDto } from 'src/users/dtos/update-user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from 'src/users/dtos/user.dto';
 import { AuthService } from 'src/users/auth.service';
+import { UserSession } from 'src/users/types';
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { User } from 'src/users/user.entity';
+import { CurrentUserInterceptor } from 'src/users/interceptors/current-user.interceptor';
 
 @Controller('auth')
 @Serialize(UserDto)
+@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(
     private userService: UsersService,
@@ -25,7 +31,10 @@ export class UsersController {
   ) {}
 
   @Post('/signup')
-  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+  async createUser(
+    @Body() body: CreateUserDto,
+    @Session() session: UserSession,
+  ) {
     const user = await this.authService.signup(body);
 
     session.userId = user.id;
@@ -34,7 +43,10 @@ export class UsersController {
   }
 
   @Post('/signin')
-  async signinUser(@Body() body: CreateUserDto, @Session() session: any) {
+  async signinUser(
+    @Body() body: CreateUserDto,
+    @Session() session: UserSession,
+  ) {
     const user = await this.authService.signin(body);
 
     session.userId = user.id;
@@ -43,8 +55,13 @@ export class UsersController {
   }
 
   @Post('/signout')
-  async signinOut(@Session() session: any) {
+  async signinOut(@Session() session: UserSession) {
     session.userId = null;
+  }
+
+  @Get('/current_user')
+  async getCurrentUser(@CurrentUser() user: User) {
+    return user;
   }
 
   @Get('/:id')
