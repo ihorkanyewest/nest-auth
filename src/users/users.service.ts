@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,14 +9,6 @@ export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
   async create(props: Omit<User, 'id'>) {
-    const existing = await this.find({ email: props.email });
-
-    if (existing.length) {
-      throw new UnprocessableEntityException(
-        `user with ${props.email} already exist`,
-      );
-    }
-
     const user = this.repo.create(props);
 
     return this.repo.save(user);
