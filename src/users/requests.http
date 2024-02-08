@@ -11,7 +11,7 @@ content-type: application/json
 GET http://localhost:3000/auth/2
 
 ### Find a user by email
-GET http://localhost:3000/auth?email=newUswe@asdfssss.com
+GET http://localhost:3000/auth?email=updatedEmail@asdf.com
 
 ### Find a user by email
 DELETE http://localhost:3000/auth/1
