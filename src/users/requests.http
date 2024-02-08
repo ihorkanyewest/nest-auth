@@ -1,10 +1,19 @@
-### Create a new user
+### Signup
 POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-  "email": "crypt@asdf.com",
-  "password": "1232311222"
+  "email": "test@test.test",
+  "password": "12345"
+}
+
+### Signin
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+  "email": "test@test.test",
+  "password": "12345"
 }
 
 ### Find a user
@@ -23,13 +32,4 @@ content-type: application/json
 {
   "email": "updatedEmail@asdf.com",
   "password": "newPass111"
-}
-
-### Signin
-POST http://localhost:3000/auth/signin
-content-type: application/json
-
-{
-  "email": "crypt@asdf.com",
-  "password": "1232311222"
 }
