@@ -5,9 +5,10 @@ import { UsersService } from 'src/users/users.service';
 describe('AuthService', () => {
   let service: AuthService;
 
-  const fakeService = {
+  const fakeService: Partial<UsersService> = {
     find: () => Promise.resolve([]),
-    create: () => Promise.resolve({}),
+    create: ({ email, password }) =>
+      Promise.resolve({ id: 0, email, password }),
   };
 
   beforeEach(async () => {
