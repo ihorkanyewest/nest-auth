@@ -4,6 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import { AuthService } from 'src/users/auth.service';
 import { User } from 'src/users/user.entity';
 import { NotFoundException } from '@nestjs/common';
+import { UserSession } from 'src/users/types';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -71,12 +72,26 @@ describe('UsersController', () => {
     expect(users).toBeDefined();
   });
 
-  it('throws an error if user not found ', async () => {
+  it('throws an error if user not found', async () => {
     const id = '0';
 
     fakeUserService.findOne = () =>
       Promise.reject(new NotFoundException('user not found'));
 
     await expect(controller.findUser(id)).rejects.toThrow(NotFoundException);
+  });
+
+  it('sign in updates session and return user', async () => {
+    const email = 'test@test.test';
+
+    const password = 'test';
+
+    const session: UserSession = {
+      userId: 10,
+    };
+
+    const user = await controller.signinUser({ email, password }, session);
+
+    expect(user.email).toEqual(email);
   });
 });
