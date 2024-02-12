@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from 'src/users/users.service';
+import { BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -43,5 +44,17 @@ describe('AuthService', () => {
     expect(salt).toBeDefined();
 
     expect(hash).toBeDefined();
+  });
+
+  it('throws an error if user signs up with email that is in use', async () => {
+    const email = 'test';
+
+    const password = 'test';
+
+    fakeService.find = () =>
+      Promise.resolve([{ id: 1, email: 'a', password: '1' }]);
+    await expect(service.signup({ email, password })).rejects.toThrow(
+      BadRequestException,
+    );
   });
 });
