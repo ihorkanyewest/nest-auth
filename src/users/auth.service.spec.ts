@@ -5,14 +5,15 @@ import { BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
-
-  const fakeService: Partial<UsersService> = {
-    find: () => Promise.resolve([]),
-    create: ({ email, password }) =>
-      Promise.resolve({ id: 0, email, password }),
-  };
+  let fakeService: Partial<UsersService>;
 
   beforeEach(async () => {
+    fakeService = {
+      find: () => Promise.resolve([]),
+      create: ({ email, password }) =>
+        Promise.resolve({ id: 0, email, password }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
@@ -51,8 +52,8 @@ describe('AuthService', () => {
 
     const password = 'test';
 
-    fakeService.find = () =>
-      Promise.resolve([{ id: 1, email: 'a', password: '1' }]);
+    fakeService.find = () => Promise.resolve([{ id: 1, email, password }]);
+
     await expect(service.signup({ email, password })).rejects.toThrow(
       BadRequestException,
     );
