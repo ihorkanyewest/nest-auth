@@ -36,4 +36,24 @@ describe('Auth Controller (e2e)', () => {
         expect(responseEmail).toEqual(email);
       });
   });
+
+  it('handle signin', async () => {
+    const email = 'test@test.test';
+
+    const password = 'test';
+
+    const res = await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({ email, password })
+      .expect(201);
+
+    const cookie = res.get('Set-Cookie');
+
+    const { body } = await request(app.getHttpServer())
+      .get('/auth/current_user')
+      .set('Cookie', cookie)
+      .expect(200);
+
+    expect(body.email).toEqual(email);
+  });
 });
