@@ -20,7 +20,7 @@ describe('Auth Controller (e2e)', () => {
   });
 
   it('handle signup', async () => {
-    const email = 'test1@test.test';
+    const email = 'test@test.test';
 
     const password = 'test';
 
