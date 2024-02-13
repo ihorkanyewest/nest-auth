@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
+    "@nestjs/config": "^3.2.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.1",
@@ -62,7 +63,9 @@
       "json",
       "ts"
     ],
-    "moduleDirectories": ["node_modules"],
+    "moduleDirectories": [
+      "node_modules"
+    ],
     "moduleNameMapper": {
       "src/(.*)": "<rootDir>/src/$1",
       "tests/(.*)": "<rootDir>/__tests__/$1"
