@@ -8,7 +8,7 @@ import { FindUserParams } from 'src/users/types';
 export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
-  async create(props: Omit<User, 'id'>) {
+  async create(props: Omit<User, 'id' | 'reports'>) {
     const user = this.repo.create(props);
 
     return this.repo.save(user);
@@ -32,7 +32,7 @@ export class UsersService {
     return this.repo.findBy(params);
   }
 
-  async update(id, params: Partial<User>) {
+  async update(id: number, params: Partial<User>) {
     const user = await this.findOne(id);
 
     Object.assign(user, params);

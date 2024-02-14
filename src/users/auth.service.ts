@@ -25,7 +25,6 @@ export class AuthService {
     return this.userService.create({
       email,
       password: cryptedPassword,
-      reports: [],
     });
   }
 
