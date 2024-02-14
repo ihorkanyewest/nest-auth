@@ -52,10 +52,11 @@ export class ReportsService {
     lng,
     lat,
   }: GetEstimateReportDto) {
-    // Start building the query with a basic select
-    let query = this.repo.createQueryBuilder().select('*');
+    let query = this.repo
+      .createQueryBuilder()
+      // .select('*')
+      .select('AVG(price)', 'price');
 
-    // Conditionally add filters for each parameter
     if (make !== undefined) {
       query = query.andWhere('make = :make', { make });
     }
@@ -74,17 +75,14 @@ export class ReportsService {
       query = query.andWhere('year - :year BETWEEN -3 AND +3', { year });
     }
 
-    // Mileage sorting can be conditionally applied if needed
     if (mileage !== undefined) {
       query = query
         .orderBy('mileage - :mileage', 'DESC')
         .setParameters({ mileage });
     }
 
-    // Limit the results (this can be adjusted based on your requirements)
     query = query.limit(3);
 
-    // Execute the query
     return query.getRawMany();
   }
 }

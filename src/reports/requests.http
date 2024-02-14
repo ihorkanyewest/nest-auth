@@ -3,7 +3,7 @@ POST http://localhost:3000/reports
 content-type: application/json
 
 {
-  "price": 12000,
+  "price": 122000,
   "make": "Mercedes",
   "model": "E200",
   "year": 2010,
