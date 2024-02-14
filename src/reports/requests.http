@@ -1,0 +1,13 @@
+### Create report
+POST http://localhost:3000/reports
+content-type: application/json
+
+{
+  "price": 70000,
+  "make": "BMW",
+  "model": "X5",
+  "year": 2020,
+  "mileage": 10000,
+  "lng": 0,
+  "lat": 0
+}
