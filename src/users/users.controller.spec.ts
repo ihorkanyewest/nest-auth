@@ -14,22 +14,22 @@ describe('UsersController', () => {
   beforeEach(async () => {
     fakeUserService = {
       async findOne(id: number): Promise<User | null> {
-        return Promise.resolve({ id, email: '', password: '' });
+        return Promise.resolve({ id, email: '', password: '', reports: [] });
       },
       async find({ email }): Promise<User[]> {
-        return Promise.resolve([{ id: 0, email, password: '' }]);
+        return Promise.resolve([{ id: 0, email, password: '', reports: [] }]);
       },
     };
 
     fakeAuthService = {
       async signup(props: Pick<User, 'email' | 'password'>): Promise<User> {
-        return Promise.resolve({ id: 0, ...props });
+        return Promise.resolve({ id: 0, ...props, reports: [] });
       },
       async signin({
         email,
         password,
       }: Pick<User, 'email' | 'password'>): Promise<User> {
-        return Promise.resolve({ id: 0, email, password });
+        return Promise.resolve({ id: 0, email, password, reports: [] });
       },
     };
 

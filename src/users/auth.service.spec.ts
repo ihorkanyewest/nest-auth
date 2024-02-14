@@ -16,7 +16,7 @@ describe('AuthService', () => {
         return Promise.resolve(users.filter((user) => user.email === email));
       },
       create: ({ email, password }) => {
-        const user: User = { id: 0, email, password };
+        const user: User = { id: 0, email, password, reports: [] };
 
         users.push(user);
 
@@ -62,7 +62,8 @@ describe('AuthService', () => {
 
     const password = 'test';
 
-    fakeService.find = () => Promise.resolve([{ id: 1, email, password }]);
+    fakeService.find = () =>
+      Promise.resolve([{ id: 1, email, password, reports: [] }]);
 
     await expect(service.signup({ email, password })).rejects.toThrow(
       BadRequestException,
@@ -85,7 +86,7 @@ describe('AuthService', () => {
     const password = 'test';
 
     fakeService.find = () =>
-      Promise.resolve([{ id: 1, email, password: 'password' }]);
+      Promise.resolve([{ id: 1, email, password: 'password', reports: [] }]);
 
     await expect(service.signin({ email, password })).rejects.toThrow(
       BadRequestException,
