@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   Patch,
   Post,
@@ -24,6 +25,12 @@ export class ReportsController {
   @Serialize(ReportDto)
   async createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
     return this.reportService.createReport(body, user);
+  }
+
+  @Get('/:id')
+  @Serialize(ReportDto)
+  async findReport(@Param('id') id: string) {
+    return this.reportService.findOne(parseInt(id));
   }
 
   @Patch('/:id')
