@@ -26,4 +26,4 @@ content-type: application/json
 
 
 ### Get Estimate
-GET http://localhost:3000/reports?make=BMW&model=X5
+GET http://localhost:3000/reports?make=Mercedes

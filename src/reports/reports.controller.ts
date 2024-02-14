@@ -32,8 +32,7 @@ export class ReportsController {
 
   @Get('')
   async getEstimate(@Query() query: GetEstimateReportDto) {
-    console.log('query', query);
-    // return this.reportService.findOne(parseInt(id));
+    return this.reportService.createEstimate(query);
   }
 
   @Get('/:id')
