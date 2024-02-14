@@ -3,11 +3,11 @@ POST http://localhost:3000/reports
 content-type: application/json
 
 {
-  "price": 70000,
-  "make": "BMW",
-  "model": "X5",
-  "year": 2020,
-  "mileage": 10000,
+  "price": 12000,
+  "make": "Mercedes",
+  "model": "E200",
+  "year": 2010,
+  "mileage": 100000,
   "lng": 0,
   "lat": 0
 }
@@ -23,3 +23,7 @@ content-type: application/json
 {
   "approved": true
 }
+
+
+### Get Estimate
+GET http://localhost:3000/reports?make=BMW&model=X5
