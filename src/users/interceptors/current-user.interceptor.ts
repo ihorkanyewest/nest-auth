@@ -3,7 +3,6 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
-  UseInterceptors,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { UsersService } from 'src/users/users.service';
@@ -26,8 +25,4 @@ export class CurrentUserInterceptor implements NestInterceptor {
 
     return next.handle();
   }
-}
-
-export function Serialize(dto: any) {
-  return UseInterceptors(new CurrentUserInterceptor(dto));
 }

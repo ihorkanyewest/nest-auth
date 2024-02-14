@@ -33,6 +33,7 @@ export class ReportsService {
   }
 
   async updateReport(id: number, props: UpdateReportDto, user: User) {
+    console.log('user', user);
     const report = await this.findOne(id);
 
     Object.assign(report, props);

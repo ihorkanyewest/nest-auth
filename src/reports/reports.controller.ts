@@ -15,6 +15,7 @@ import { User } from 'src/users/user.entity';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { ReportDto } from 'src/reports/dtos/report.dto';
 import { UpdateReportDto } from 'src/reports/dtos/update-report.dto';
+import { AdminGuard } from 'src/guards/admin.guard';
 
 @Controller('reports')
 export class ReportsController {
@@ -34,7 +35,7 @@ export class ReportsController {
   }
 
   @Patch('/:id')
-  @UseGuards(AuthGuard)
+  @UseGuards(AdminGuard)
   @Serialize(ReportDto)
   async updateReport(
     @Param('id') id: string,
